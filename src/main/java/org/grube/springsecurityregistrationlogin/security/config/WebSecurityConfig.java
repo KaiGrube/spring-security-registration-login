@@ -56,18 +56,16 @@ public class WebSecurityConfig {
     SecurityFilterChain web(HttpSecurity http) throws Exception {
 //        http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated());
         http.authorizeHttpRequests()
-                .antMatchers("/api/v*/registration/**", "/api/v1/hello/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin();
+            .anyRequest()
+            .authenticated()
+            .and()
+            .formLogin();
         return http.build();
     }
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/api/v*/registration/**", "/api/v1/hello/**");
+        return web -> web.ignoring().antMatchers("/api/v*/registration/**", "/api/v1/hello/**");
     }
 }
 
