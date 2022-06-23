@@ -1,17 +1,20 @@
 package org.grube.springsecurityregistrationlogin.appuser;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class AppUserService implements UserDetailsService {
     private final static String USER_NOT_FOUND_MSG = "user with email %s not found";
     private final AppUserRepository appUserRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -19,7 +22,13 @@ public class AppUserService implements UserDetailsService {
                 new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email)));
     }
 
-    public String signUpAppUser(AppUser appUser) {
-        return "sign up " + appUser.getEmail();
+    public AppUser signUpAppUser(AppUser userToSignUp) {
+        boolean userExists = appUserRepository.findByEmail(userToSignUp.getEmail()).isPresent();
+        if (userExists) throw new IllegalStateException("email already exists");
+        String encodedPassword = bCryptPasswordEncoder.encode(userToSignUp.getPassword());
+        userToSignUp.setPassword(encodedPassword);
+        AppUser signedUpUser = appUserRepository.save(userToSignUp);
+        log.info(String.format("New user signed up: %s", signedUpUser));
+        return signedUpUser;
     }
 }

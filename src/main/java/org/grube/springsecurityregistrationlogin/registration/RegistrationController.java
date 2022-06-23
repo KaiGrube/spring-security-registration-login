@@ -16,9 +16,4 @@ public class RegistrationController {
         log.info(request.toString());
         return registrationService.register(request);
     }
-
-    @GetMapping
-    public String test() {
-        return "it works";
-    }
 }

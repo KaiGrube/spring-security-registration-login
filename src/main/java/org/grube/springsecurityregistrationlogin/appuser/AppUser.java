@@ -58,7 +58,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return password;
     }
 
     @Override
@@ -87,7 +87,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return enabled;
     }
 
     @Override

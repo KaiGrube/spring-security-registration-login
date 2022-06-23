@@ -12,18 +12,21 @@ public class AppUserConfig {
     @Bean
     CommandLineRunner commandLineRunner(AppUserRepository appUserRepository) {
         return args -> {
+
             AppUser admin = new AppUser(
                     "Anton",
                     "Administri",
                     "anton@admin.com",
                     "admin",
                     AppUserRole.ADMIN);
+
             AppUser user = new AppUser(
                     "Ulf",
                     "Useri",
                     "ulf@user.com",
                     "user",
                     AppUserRole.USER);
+
             appUserRepository.saveAll(List.of(admin, user));
         };
     }

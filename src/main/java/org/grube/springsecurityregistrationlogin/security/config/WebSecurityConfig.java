@@ -50,7 +50,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class WebSecurityConfig {
 
     private final AppUserService appUserService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+//    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Bean
     SecurityFilterChain web(HttpSecurity http) throws Exception {

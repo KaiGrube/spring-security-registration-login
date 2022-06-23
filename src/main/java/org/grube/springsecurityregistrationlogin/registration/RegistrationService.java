@@ -3,8 +3,8 @@ package org.grube.springsecurityregistrationlogin.registration;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.grube.springsecurityregistrationlogin.appuser.AppUser;
-import org.grube.springsecurityregistrationlogin.appuser.AppUserRepository;
 import org.grube.springsecurityregistrationlogin.appuser.AppUserRole;
+import org.grube.springsecurityregistrationlogin.appuser.AppUserService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,27 +13,23 @@ import org.springframework.stereotype.Service;
 public class RegistrationService {
 
     private final EmailValidator emailValidator;
-    private final AppUserRepository appUserRepository;
+    private final AppUserService appUserService;
 
     //todo: create Exception Handler
     public String register(RegistrationRequest request) {
-        boolean isValidEmail = emailValidator.test(request.getEmail());
+        String requestedEmail = request.getEmail();
+        boolean isValidEmail = emailValidator.test(requestedEmail);
         if (!isValidEmail) {
-            log.info("email is not valid.");
-//            throw new IllegalArgumentException("email not valid");
+            log.info(String.format("Email %s is not valid.", requestedEmail));
+//            throw new IllegalArgumentException("requestedEmail not valid");
         }
-        appUserRepository.findByEmail(request.getEmail()).ifPresent(email -> {
-            log.info("email already exists.");
-            throw new IllegalStateException("email already exists");
-        });
-
-        AppUser appUser = new AppUser(
+        AppUser userToRegister = new AppUser(
                 request.getFirstName(),
                 request.getLastName(),
-                request.getEmail(),
+                requestedEmail,
                 request.getPassword(),
                 AppUserRole.USER);
-        appUserRepository.save(appUser);
-        return "new appUser registered: " + appUser;
+        AppUser registeredUser = appUserService.signUpAppUser(userToRegister);
+        return "Registered user: " + registeredUser;
     }
 }
