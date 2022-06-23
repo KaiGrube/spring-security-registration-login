@@ -29,7 +29,7 @@ public class RegistrationService {
                 requestedEmail,
                 request.getPassword(),
                 AppUserRole.USER);
-        AppUser registeredUser = appUserService.signUpAppUser(userToRegister);
-        return "Registered user: " + registeredUser;
+        String token = appUserService.signUpAppUser(userToRegister);
+        return "Registered user, got token " + token;
     }
 }
