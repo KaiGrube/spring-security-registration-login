@@ -41,6 +41,7 @@ public class AppUserService implements UserDetailsService {
                 LocalDateTime.now().plusMinutes(1),
                 signedUpUser);
         confirmationTokenRepository.save(confirmationToken); // todo: use return value to check operation
+        // todo: isolate token generation from here; is also needed for login
         log.info(String.format("New user signed up: %s", signedUpUser));
         return token;
     }

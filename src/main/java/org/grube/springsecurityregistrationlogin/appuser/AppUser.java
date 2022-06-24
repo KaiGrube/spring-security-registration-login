@@ -14,11 +14,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
+@Entity
 public class AppUser implements UserDetails {
     @SequenceGenerator(
             name = "appuser_sequence",
@@ -103,3 +103,5 @@ public class AppUser implements UserDetails {
         return getClass().hashCode();
     }
 }
+
+
