@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping(path = "api/v1")
 @AllArgsConstructor
 @Slf4j
+@RestController
+@RequestMapping(path = "api/v1")
+
+@CrossOrigin(origins = "http://localhost:3000")
 public class RegistrationController {
     private final RegistrationService registrationService;
 

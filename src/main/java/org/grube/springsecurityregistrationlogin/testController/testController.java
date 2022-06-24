@@ -1,13 +1,12 @@
-package org.grube.springsecurityregistrationlogin.basiccontroller;
+package org.grube.springsecurityregistrationlogin.testController;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+// only for testing purposes | todo: remove later
 @RestController
 //@RequestMapping(path = "api/v1")
-public class BasicController {
+public class testController {
     @GetMapping(path = "/api/v1/secured")
     public String secured() {
         return "secured";
@@ -20,5 +19,4 @@ public class BasicController {
     public String logout() {
         return "logout";
     }
-
 }
